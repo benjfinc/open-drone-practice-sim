@@ -29,12 +29,13 @@ logged reproducibly, and custom tracks are ordinary YAML files.
 | Platform | Status |
 | --- | --- |
 | Linux | Verified with keyboard and a RadioMaster Zorro over USB HID |
-| Windows 10/11 | Supported by the launcher and dependency set; native graphics/controller test pending |
+| Windows 10/11 | Verified with keyboard on a native Windows desktop; controller test pending |
 | macOS | Not currently tested |
 
-The Windows setup is deliberately marked as pending until it has been tested on a
-real Windows desktop and GPU. Please report the GPU, driver, Python version, and
-terminal output if you encounter a problem.
+The Windows desktop application, OpenGL renderer, and keyboard controls have been
+smoke-tested successfully. USB controller and transmitter handling on Windows still
+needs hardware verification. Please report the GPU, driver, Python version,
+controller model, and terminal output if you encounter a problem.
 
 ## Requirements
 
@@ -226,8 +227,9 @@ python bench.py
 ```
 
 The CI workflow runs the unit suite and command-line smoke test on both Ubuntu and
-Windows. Graphical rendering still requires a real desktop smoke test. Contribution
-expectations are in [CONTRIBUTING.md](CONTRIBUTING.md).
+Windows. Graphical rendering and keyboard input have also been smoke-tested on a
+native Windows desktop. Contribution expectations are in
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 Key modules:
 
@@ -252,8 +254,9 @@ display layout, platform-specific OpenGL selection, and the module entry point.
 These checks establish software behavior and runtime headroom; they do not establish
 fidelity to a particular airframe. Human handling assessment, controller mapping,
 display latency, and real-aircraft system identification depend on the user's hardware
-and tuning. Linux has been exercised interactively; native Windows rendering and
-controller behavior remain to be verified after publication.
+and tuning. Linux has been exercised interactively, and Windows rendering and keyboard
+input have completed a native desktop smoke test. Windows controller behavior remains
+to be verified with hardware.
 
 ## Safety
 
