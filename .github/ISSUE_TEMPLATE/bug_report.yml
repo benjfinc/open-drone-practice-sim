@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a reproducible simulator problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve Open Drone Racing Sim.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Run ...
+        2. Press ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Launch command
+      placeholder: python run.py --keyboard
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, GPU/driver, and controller model.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Terminal output or screenshots
+      render: shell

@@ -1,0 +1,73 @@
+# Original fictional course for Open Drone Racing Sim.
+# Coordinates are metres in a z-up world frame. Gate positions are bottom-centre.
+name: "Neon Circuit"
+
+footprint: [48.0, 28.0]
+gate_width: 2.70
+gate_height: 2.70
+gate_opening_width: 1.50
+gate_opening_height: 1.50
+gate_depth: 0.26
+
+lap_order: [start, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+lap_length_m: 92.83
+
+timing_line:
+  start:
+    kind: start_line
+    lap_index: 0
+    pos: [0.0, 0.0, 0.0]
+    yaw: 0.0
+    length_m: 2.346
+
+gates:
+  "1":
+    lap_index: 1
+    pos: [7.0, 0.0, 0.0]
+    yaw: 0.0
+  "2":
+    lap_index: 2
+    pos: [14.0, 4.0, 0.0]
+    yaw: 0.785398
+  "3":
+    lap_index: 3
+    pos: [17.0, 11.0, 0.0]
+    yaw: 1.570796
+  "4":
+    lap_index: 4
+    pos: [11.0, 16.0, 0.0]
+    yaw: 3.141593
+  "5":
+    lap_index: 5
+    pos: [2.0, 16.0, 0.0]
+    yaw: 3.141593
+  "6":
+    lap_index: 6
+    pos: [-6.0, 11.0, 0.0]
+    yaw: 3.926991
+  "7":
+    lap_index: 7
+    pos: [-8.0, 3.0, 0.0]
+    yaw: 4.712389
+  "8":
+    lap_index: 8
+    pos: [-8.0, -5.0, 0.0]
+    yaw: 4.712389
+  "8b":
+    lap_index: 8
+    pos: [-8.0, -5.0, 2.70]
+    yaw: 4.712389
+  "9":
+    lap_index: 9
+    pos: [-2.0, -10.0, 0.0]
+    yaw: 5.497787
+  "10":
+    lap_index: 10
+    pos: [7.0, -8.0, 0.0]
+    yaw: 0.0
+
+obstacles:
+  pillar_north:
+    pos: [5.0, 9.0, 0.0]
+  pillar_south:
+    pos: [-1.0, -3.0, 0.0]

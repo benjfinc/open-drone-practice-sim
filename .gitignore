@@ -1,0 +1,12 @@
+.venv
+runs/
+bench_out/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.DS_Store
+config/calibration.yaml

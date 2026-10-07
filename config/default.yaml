@@ -1,0 +1,142 @@
+# FPV acro practice sim -- configuration.
+#
+# Source tags (grep them):
+#   [DESIGN]       selected for the bundled fictional track or vehicle
+#   [BF-DEFAULT]   Betaflight 4.x firmware default value (a known number)
+#   [PLACEHOLDER]  unknown; a typical racing-quad value. Replace with real data.
+#
+# Every value can be overridden on the command line:  --set physics.mass_kg=0.9
+
+track:
+  preset: neon-circuit
+  yaml: assets/neon_circuit.yaml
+  # The stacked gate can count as one station (either opening) or two
+  # sequential checkpoints (upper opening followed by lower opening).
+  double_gate_mode: one_station
+  double_gate_sequence: ["8b", "8"]
+  require_forward_direction: true   # a gate crossed backwards does not count
+  gate_pass_margin_m: 0.0           # 0 = exact 1.5x1.5 aperture [SPEC]
+  spawn_back_m: 2.0                 # spawn this far behind the timing line
+  spawn_height_m: 0.03              # resting on the floor
+  # Ceiling: the stacked gate's frame top is 5.40 m, half a gate (2.70/2)
+  # above that is 6.75 m. null = no ceiling.
+  ceiling_height_m: 6.75
+  ceiling_crash: false              # false = you slide along it; true = a hard hit crashes
+  venue_margin_m: 12.0              # wall centreline outside the course-element bounds
+  venue_wall_thickness_m: 0.4       # rendered and physical wall thickness
+  venue_wall_height_m: 8.0          # wall height when ceiling_height_m is null
+  venue_walls: true                 # false = no generated walls or roof
+  show_venue_features: true
+  gate_color_rgb: [0.96, 0.30, 0.08]
+
+physics:
+  dt: 0.001                         # 1 kHz fixed step (physics + rate loop)
+  gravity: 9.81
+  mass_kg: 0.828                    # [DESIGN] practice model; real AUW unknown
+  inertia_kgm2: [0.0035, 0.0035, 0.0060]   # [PLACEHOLDER] 5-inch-class scaled to mass
+  arm_offset_m: 0.078               # [PLACEHOLDER] motor x/y offset (220 mm diagonal)
+  motor_max_thrust_n: 16.0          # [PLACEHOLDER] per motor, ~T/W 7.9 at 0.828 kg
+  motor_tau_up_s: 0.030             # [PLACEHOLDER] first-order motor lag, spin-up
+  motor_tau_down_s: 0.035           # [PLACEHOLDER] spin-down
+  motor_idle: 0.05                  # [BF-DEFAULT] dshot_idle_value 5 %
+  yaw_torque_coef_m: 0.016          # [PLACEHOLDER] km/kf, drag torque per newton of thrust
+  props_in: true                    # [BF-DEFAULT] motor direction (not reversed)
+  drag_linear: [0.05, 0.05, 0.10]   # [PLACEHOLDER] N/(m/s), body x,y,z
+  drag_quadratic: [0.030, 0.030, 0.060]  # [PLACEHOLDER] N/(m/s)^2, body x,y,z
+  rot_damping: 0.0005               # [PLACEHOLDER] N m/(rad/s)
+  ground_effect: false              # simple ground effect (off by default)
+  ground_effect_gain: 0.3
+  body_radius_m: 0.10               # collision sphere vs gate frames
+
+controller:
+  # Inner rate loop. Gains are in physical units: the PID output is an angular
+  # ACCELERATION demand (rad/s^2), multiplied by the inertia to get torque, so
+  # gains do not have to change when mass/inertia change. Not Betaflight numbers.
+  kp: [28.0, 28.0, 18.0]            # 1/s
+  ki: [60.0, 60.0, 40.0]            # 1/s^2
+  kd: [0.25, 0.25, 0.0]             # dimensionless, x d(gyro)/dt (on gyro, not error)
+  kff: [0.30, 0.30, 0.20]           # dimensionless, x d(setpoint)/dt
+  i_limit: [40.0, 40.0, 20.0]       # rad/s^2
+  gyro_lpf_hz: 150.0
+  dterm_lpf_hz: 90.0
+  setpoint_smoothing_hz: 40.0       # RC smoothing (also removes the per-frame staircase)
+  iterm_relax: true
+  iterm_relax_cutoff_hz: 15.0
+  iterm_relax_threshold_dps: 40.0
+  airmode: true
+  gyro_noise_dps: 0.0               # white noise on the simulated gyro
+
+rates:
+  rc_deadband: 2                    # Betaflight units (0..500 stick half-range)
+  yaw_deadband: 2
+  default_preset: default
+  # type: betaflight -> rc_rate, super_rate, expo    (BF rcRate 1.0 = "100")
+  # type: actual     -> center_dps, max_dps, expo
+  presets:
+    default:                        # [BF-DEFAULT] 4.3+ firmware defaults
+      type: actual
+      roll:  {center_dps: 70,  max_dps: 670, expo: 0.0}
+      pitch: {center_dps: 70,  max_dps: 670, expo: 0.0}
+      yaw:   {center_dps: 70,  max_dps: 670, expo: 0.0}
+    pro:                            # [PLACEHOLDER] example high-rate preset
+      type: actual
+      roll:  {center_dps: 200, max_dps: 670, expo: 0.54}
+      pitch: {center_dps: 200, max_dps: 670, expo: 0.54}
+      yaw:   {center_dps: 150, max_dps: 500, expo: 0.30}
+    max:                            # [PLACEHOLDER] example maximum-rate preset
+      type: actual
+      roll:  {center_dps: 250, max_dps: 1000, expo: 0.50}
+      pitch: {center_dps: 250, max_dps: 1000, expo: 0.50}
+      yaw:   {center_dps: 200, max_dps: 800,  expo: 0.30}
+    bf_classic:                     # example of "Betaflight" rates (667 deg/s max)
+      type: betaflight
+      roll:  {rc_rate: 1.0, super_rate: 0.70, expo: 0.0}
+      pitch: {rc_rate: 1.0, super_rate: 0.70, expo: 0.0}
+      yaw:   {rc_rate: 1.0, super_rate: 0.70, expo: 0.0}
+  preset_cycle: [default, pro, max]
+  throttle:
+    mid: 0.5                        # [BF-DEFAULT] thr_mid 50
+    expo: 0.0                       # [BF-DEFAULT] thr_expo 0
+
+collision:
+  mode: reset                       # reset | bounce
+  floor_crash_speed_mps: 4.0        # impact speed above which the floor is a crash
+  gate_crash_speed_mps: 1.0         # contact speed above which a gate hit is a crash
+  wall_crash_speed_mps: 1.0         # contact speed above which a venue-wall hit is a crash
+  restitution: 0.3                  # bounce mode / soft contacts
+  ground_friction: 6.0              # 1/s horizontal velocity decay on the ground
+  crash_reset_delay_s: 0.6          # show CRASH, then reset
+
+camera:
+  mode: fpv                         # fpv | chase | static  (C cycles)
+  uptilt_deg: 20.0                  # [DESIGN]
+  uptilt_min_deg: 0.0
+  uptilt_max_deg: 60.0
+  tilt_step_deg: 5.0
+  fov_mode: spec                    # spec: from intrinsics below | wide: hfov_wide_deg
+  spec_width: 640                   # 640x360, fx=fy=320 -> 90 deg hfov
+  spec_height: 360
+  spec_fx: 320.0
+  hfov_wide_deg: 115.0              # typical human FPV setting
+  offset_body_m: [0.05, 0.0, 0.02]  # [PLACEHOLDER] camera position in body FLU
+  near_m: 0.03
+  far_m: 400.0
+  chase_distance_m: 2.2
+  chase_height_m: 0.7
+  static_pos: null                  # null = 8 m outside the course corner, 9 m up
+
+display:
+  width: 1280
+  height: 720
+  fullscreen: false
+  show_help_on_start: true
+  vsync: false
+  gpu: default                      # default | nvidia (PRIME offload)
+  osd_hz: 15
+  msaa: 4
+  fog_density: 0.004
+
+logging:
+  enabled: true
+  dir: runs  # relative to repo root
+  chunk_ticks: 60000                # ticks per on-disk chunk (60 s at 1 kHz)

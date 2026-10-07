@@ -1,0 +1,14 @@
+id: open-world
+name: Open World Test Range
+description: Unbounded outdoor sandbox for flight and physics testing
+
+track:
+  yaml: assets/open_world.yaml
+  ceiling_height_m: null
+  ceiling_crash: false
+  venue_margin_m: 80.0
+  venue_wall_thickness_m: 0.4
+  venue_wall_height_m: 3.0
+  venue_walls: false
+  show_venue_features: false
+  gate_color_rgb: [0.10, 0.85, 0.95]

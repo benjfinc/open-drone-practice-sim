@@ -1,0 +1,14 @@
+id: neon-circuit
+name: Neon Circuit
+description: Enclosed ten-gate technical racing circuit
+
+track:
+  yaml: assets/neon_circuit.yaml
+  ceiling_height_m: 6.75
+  ceiling_crash: false
+  venue_margin_m: 12.0
+  venue_wall_thickness_m: 0.4
+  venue_wall_height_m: 8.0
+  venue_walls: true
+  show_venue_features: true
+  gate_color_rgb: [0.96, 0.30, 0.08]

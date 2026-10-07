@@ -1,0 +1,10 @@
+# Compatibility mirror of pyproject.toml's runtime and development dependencies.
+# Normal source-checkout setup uses: python bootstrap.py
+glcontext==3.0.0
+moderngl==5.12.0
+numba==0.67.0
+numpy==2.5.3
+pillow==12.3.0
+pygame-ce==2.5.8
+pytest==9.1.1
+PyYAML==6.0.3

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-drone-practice-sim"
+version = "0.1.0"
+description = "A transparent, configurable FPV drone-racing simulator"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = {file = "LICENSE"}
+authors = [{name = "Benjamin Finch"}]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Win32 (MS Windows)",
+  "Environment :: X11 Applications",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Games/Entertainment :: Simulation",
+]
+dependencies = [
+  "glcontext==3.0.0",
+  "moderngl==5.12.0",
+  "numba==0.67.0",
+  "numpy==2.5.3",
+  "pillow==12.3.0",
+  "pygame-ce==2.5.8",
+  "PyYAML==6.0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[project.scripts]
+open-drone-practice-sim = "fly:main"
+
+[project.urls]
+Homepage = "https://github.com/benjfinc/open-drone-practice-sim"
+Issues = "https://github.com/benjfinc/open-drone-practice-sim/issues"
+
+[tool.setuptools]
+py-modules = ["fly"]
+
+[tool.setuptools.packages.find]
+include = ["fpvsim*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
